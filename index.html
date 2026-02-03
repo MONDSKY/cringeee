@@ -2,34 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>cringeee</title>
+  <title>cringee😔</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <button id="musicBtn">🔊</button>
-
   <audio id="bgMusic" loop>
-    <source src="promise.mp3" type="audio/mpeg">
+    <source src="promise.mp3" type="audio/mp3">
   </audio>
 
-  <video id="vid" autoplay loop muted playsinline>
-    <source src="cutie.mp4" type="video/mp4">
-  </video>
+  <div class="container">
+    <video id="mainVideo" loop>
+      <source src="cutie.mp4" type="video/mp4">
+    </video>
 
-  <h1>Will you be my Valentine?</h1>
+    <p id="message"></p>
 
-  <div class="buttons">
-    <button id="yesBtn">Yes </button>
-    <button id="noBtn">No </button>
-  </div>
+    <div class="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
 
-  <div id="finalScreen">
-<video id="finalVideo" autoplay loop muted playsinline>
-<source src="angkol.mp4" type="video/mp4" />
-</video>
-    <h2>ihh, I knew you'd say yes 😌💖</h2>
+    <p id="finalText" class="hidden">I knew you'd say yes😌💖</p>
   </div>
 
   <script src="script.js"></script>
