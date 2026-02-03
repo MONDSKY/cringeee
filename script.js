@@ -9,7 +9,7 @@ let yesScale = 1;
 let noCount = 0;
 let audioStarted = false;
 
-const text = "Will you be my Valentine? 😇";
+const text = "Can you be my date? 😇";
 let index = 0;
 
 const yesTexts = [
