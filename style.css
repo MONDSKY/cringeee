@@ -1,0 +1,136 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: env(safe-area-inset-top)
+           env(safe-area-inset-right)
+           env(safe-area-inset-bottom)
+           env(safe-area-inset-left);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+video {
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  margin-top: 16px;
+}
+
+h1 {
+  margin: 16px 0 8px;
+  font-size: clamp(20px, 5vw, 28px);
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.buttons {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 170px;
+  margin-bottom: 24px;
+}
+
+button {
+  padding: 14px 26px;
+  font-size: clamp(14px, 4vw, 18px);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  position: absolute;
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+#noBtn {
+  background: white;
+  color: #ff4d6d;
+  left: 60%;
+  top: 100px;
+}
+
+.emoji, .heart {
+  position: absolute;
+  pointer-events: none;
+}
+
+.emoji {
+  font-size: 26px;
+  animation: floatUp 3s linear forwards;
+}
+
+.heart {
+  font-size: 24px;
+  animation: fall 5s linear forwards;
+}
+
+@keyframes floatUp {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-140px); }
+}
+
+@keyframes fall {
+  from { opacity: 1; transform: translateY(-50px); }
+  to { opacity: 0; transform: translateY(110vh); }
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+#finalScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  text-align: center;
+  z-index: 10;
+}
+
+#musicBtn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 5;
+}
+
