@@ -83,7 +83,7 @@ noBtn.onclick = () => {
 
 /* YES click */
 yesBtn.onclick = () => {
-  video.src = "ihh.mp4";
+  video.src = "angkol.mp4";
   video.play();
 
   heartRain();
