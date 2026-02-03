@@ -64,7 +64,7 @@ noBtn.onclick = () => {
   randomPosition(noBtn);
   yesScale += 0.15;
   yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
-  video.src = "video2.mp4";
+  video.src = "sadcat.mp4";
   sadEmojis();
   document.body.classList.add("shake");
   setTimeout(() => document.body.classList.remove("shake"), 300);
@@ -72,7 +72,7 @@ noBtn.onclick = () => {
 
 // YES click
 yesBtn.onclick = () => {
-  video.src = "video3.mp4";
+  video.src = "ihh.mp4";
   heartRain();
   for (let i = 0; i < 20; i++) spawnEmoji("💋");
   setTimeout(() => finalScreen.style.display = "flex", 1200);
