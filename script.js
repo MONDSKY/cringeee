@@ -1,95 +1,118 @@
-const noBtn = document.getElementById("noBtn");
+const video = document.getElementById("mainVideo");
+const bgMusic = document.getElementById("bgMusic");
 const yesBtn = document.getElementById("yesBtn");
-const video = document.getElementById("vid");
-const finalScreen = document.getElementById("finalScreen");
-const music = document.getElementById("bgMusic");
-const musicBtn = document.getElementById("musicBtn");
-
-const yesTexts = [
-  "Yes 💖",
-  "Sure? 😏",
-  "Come on 😌",
-  "Just click me🥰",
-  "You want this😳",
-  "YES ALREADY😡"
-];
+const noBtn = document.getElementById("noBtn");
+const message = document.getElementById("message");
+const finalText = document.getElementById("finalText");
 
 let yesScale = 1;
-let yesTextIndex = 0;
-let musicPlaying = false;
+let noCount = 0;
+let audioStarted = false;
 
-/* Music toggle */
-musicBtn.onclick = () => {
-  musicPlaying ? music.pause() : music.play();
-  musicBtn.textContent = musicPlaying ? "🔊" : "🔇";
-  musicPlaying = !musicPlaying;
-};
+const text = "Will you be my Valentine? 😇";
+let index = 0;
 
-/* Emojis */
-function spawnEmoji(char) {
-  const e = document.createElement("div");
-  e.className = "emoji";
-  e.textContent = char;
-  e.style.left = Math.random() * window.innerWidth + "px";
-  e.style.top = Math.random() * window.innerHeight + "px";
-  document.body.appendChild(e);
-  setTimeout(() => e.remove(), 3000);
+const yesTexts = [
+  "Yes 💕",
+  "Think again 😳",
+  "Pls say yes 🥺",
+  "pinduti na nganiiii",
+  "YES!!!"
+];
+
+// Typing effect
+function typeText() {
+  if (index < text.length) {
+    message.textContent += text.charAt(index);
+    index++;
+    setTimeout(typeText, 80);
+  }
+}
+typeText();
+
+// Enable sound (video + bg music)
+function enableAudio() {
+  if (!audioStarted) {
+    video.play();
+    fadeInMusic();
+    audioStarted = true;
+  }
+  document.removeEventListener("click", enableAudio);
+}
+document.addEventListener("click", enableAudio);
+
+// Fade-in background music
+function fadeInMusic() {
+  bgMusic.volume = 0;
+  bgMusic.play();
+  let vol = 0;
+  const fade = setInterval(() => {
+    if (vol < 0.6) {
+      vol += 0.02;
+      bgMusic.volume = vol;
+    } else {
+      clearInterval(fade);
+    }
+  }, 150);
 }
 
-function sadEmojis() {
-  const end = Date.now() + 10000;
+// NO button logic
+noBtn.addEventListener("click", () => {
+  enableAudio();
+  noCount++;
+
+  noBtn.style.left = Math.random() * 250 + "px";
+  noBtn.style.top = Math.random() * 90 + "px";
+
+  video.src = "sadcat.mp4";
+  video.play();
+
+  yesScale += 0.25;
+  yesBtn.style.transform = `scale(${yesScale})`;
+  yesBtn.textContent = yesTexts[noCount % yesTexts.length];
+
+  spawnEmojis("🙁");
+});
+
+// YES button logic
+yesBtn.addEventListener("click", () => {
+  enableAudio();
+
+  video.src = "angkol.mp4";
+  video.play();
+
+  finalText.classList.remove("hidden");
+  message.style.display = "none";
+  noBtn.style.display = "none";
+
+  spawnEmojis("💋");
+  spawnHearts();
+});
+
+// Emojis
+function spawnEmojis(symbol) {
   const interval = setInterval(() => {
-    if (Date.now() > end) return clearInterval(interval);
-    spawnEmoji("🙁");
+    const e = document.createElement("div");
+    e.className = "emoji";
+    e.textContent = symbol;
+    e.style.left = Math.random() * window.innerWidth + "px";
+    e.style.top = window.innerHeight - 50 + "px";
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 3000);
   }, 300);
-}
-
-function heartRain() {
-  const interval = setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.textContent = "❤️";
-    heart.style.left = Math.random() * window.innerWidth + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-  }, 200);
 
   setTimeout(() => clearInterval(interval), 10000);
 }
 
-/* NO click */
-noBtn.onclick = () => {
-  const container = document.querySelector(".buttons");
-  const c = container.getBoundingClientRect();
-  const b = noBtn.getBoundingClientRect();
-
-  noBtn.style.left = Math.random() * (c.width - b.width) + "px";
-  noBtn.style.top = Math.random() * (c.height - b.height) + "px";
-
-  yesScale += 0.15;
-  yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
-
-  if (yesTextIndex < yesTexts.length - 1) {
-    yesTextIndex++;
-    yesBtn.textContent = yesTexts[yesTextIndex];
-  }
-
-  video.src = "sadcat.mp4";
-  sadEmojis();
-
-  document.body.classList.add("shake");
-  setTimeout(() => document.body.classList.remove("shake"), 300);
-};
-
-/* YES click */
-yesBtn.onclick = () => {
-  video.src = "angkol.mp4";
-  video.play();
-
-  heartRain();
-  for (let i = 0; i < 20; i++) spawnEmoji("💋");
-
-  setTimeout(() => {
-    finalScreen.style.display = "flex";
-  }, 1200);
-};
+// Floating hearts forever 💗
+function spawnHearts() {
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "emoji";
+    h.textContent = "💗";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.top = window.innerHeight + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 3000);
+  }, 500);
+}
