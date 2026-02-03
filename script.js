@@ -5,27 +5,37 @@ const finalScreen = document.getElementById("finalScreen");
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
 
+const yesTexts = [
+  "Yes 💖",
+  "Sure? 😏",
+  "Come on 😌",
+  "Just click me🥰",
+  "You want this😳",
+  "YES ALREADY😡"
+];
+
 let yesScale = 1;
+let yesTextIndex = 0;
 let musicPlaying = false;
 
-// Music toggle
+/* Music toggle */
 musicBtn.onclick = () => {
   musicPlaying ? music.pause() : music.play();
   musicBtn.textContent = musicPlaying ? "🔊" : "🔇";
   musicPlaying = !musicPlaying;
 };
 
-// Random NO position (screen-safe)
-function randomPosition(btn) {
-  const rect = btn.getBoundingClientRect();
-  const maxX = window.innerWidth - rect.width;
-  const maxY = window.innerHeight - rect.height;
-
-  btn.style.left = Math.random() * maxX + "px";
-  btn.style.top = Math.random() * maxY + "px";
+/* Emojis */
+function spawnEmoji(char) {
+  const e = document.createElement("div");
+  e.className = "emoji";
+  e.textContent = char;
+  e.style.left = Math.random() * window.innerWidth + "px";
+  e.style.top = Math.random() * window.innerHeight + "px";
+  document.body.appendChild(e);
+  setTimeout(() => e.remove(), 3000);
 }
 
-// Sad emojis
 function sadEmojis() {
   const end = Date.now() + 10000;
   const interval = setInterval(() => {
@@ -34,7 +44,6 @@ function sadEmojis() {
   }, 300);
 }
 
-// Heart rain
 function heartRain() {
   const interval = setInterval(() => {
     const heart = document.createElement("div");
@@ -48,33 +57,39 @@ function heartRain() {
   setTimeout(() => clearInterval(interval), 10000);
 }
 
-// Emoji spawner
-function spawnEmoji(char) {
-  const emoji = document.createElement("div");
-  emoji.className = "emoji";
-  emoji.textContent = char;
-  emoji.style.left = Math.random() * window.innerWidth + "px";
-  emoji.style.top = Math.random() * window.innerHeight + "px";
-  document.body.appendChild(emoji);
-  setTimeout(() => emoji.remove(), 3000);
-}
-
-// NO click
+/* NO click */
 noBtn.onclick = () => {
-  randomPosition(noBtn);
+  const container = document.querySelector(".buttons");
+  const c = container.getBoundingClientRect();
+  const b = noBtn.getBoundingClientRect();
+
+  noBtn.style.left = Math.random() * (c.width - b.width) + "px";
+  noBtn.style.top = Math.random() * (c.height - b.height) + "px";
+
   yesScale += 0.15;
   yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
+
+  if (yesTextIndex < yesTexts.length - 1) {
+    yesTextIndex++;
+    yesBtn.textContent = yesTexts[yesTextIndex];
+  }
+
   video.src = "sadcat.mp4";
   sadEmojis();
+
   document.body.classList.add("shake");
   setTimeout(() => document.body.classList.remove("shake"), 300);
 };
 
-// YES click
+/* YES click */
 yesBtn.onclick = () => {
   video.src = "ihh.mp4";
+  video.play();
+
   heartRain();
   for (let i = 0; i < 20; i++) spawnEmoji("💋");
-  setTimeout(() => finalScreen.style.display = "flex", 1200);
+
+  setTimeout(() => {
+    finalScreen.style.display = "flex";
+  }, 1200);
 };
-    
